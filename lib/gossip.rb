@@ -26,4 +26,17 @@ attr_accessor :author, :content
         return all_gossips[id]
       end
 
+      def self.update(id, author, content)
+        id = id.to_i
+        all_gossips = self.all
+        all_gossips[id].author = author
+        all_gossips[id].content = content
+      
+        CSV.open("./db/gossip.csv", "wb") do |csv|
+          all_gossips.each do |gossip|
+            csv << [gossip.author, gossip.content]
+          end
+        end
+    end
+    
 end
